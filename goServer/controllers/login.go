@@ -21,6 +21,13 @@ func(this *LoginController) Post(){
 	beego.Notice("login-------post");
 }
 
+
+type Student struct {
+	Name string
+	Age int
+	Code string
+	Url string
+}
 func(this *LoginController) Get(){
 	//log.Print("login-------Get");
 	//beego.Notice("login-------Get");
@@ -32,7 +39,15 @@ func(this *LoginController) Get(){
 	name:=this.GetString("name");
 	age,_:=this.GetInt("age");
 	if code != "" {
-		this.Ctx.WriteString(fmt.Sprint("Name:",name,"Age:",age,"Code",code));
+		mystruct:=Student{
+			Name:name,
+			Age:age,
+			Code:code,
+			Url:"./static/img/tuoyuan.png",
+		}
+		this.Data["json"] = &mystruct
+		this.ServeJSON()
+
 		return
 	}
 
